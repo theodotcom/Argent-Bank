@@ -6,7 +6,7 @@ import iconChat from '../img/icon-chat.png'
 import iconMoney from '../img/icon-money.png'
 import iconSecurity from '../img/icon-security.png'
 
-function Index() {
+const Index = () => {
     return (
         <div className="body_container">
             <nav className="main-nav">

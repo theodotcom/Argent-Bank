@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import '../css/main.css'
 import logo from '../img/argentBankLogo.png'
 
-function Signin() {
+const Signin = () => {
     return (
         <div className="body_container">
             <nav className="main-nav">
