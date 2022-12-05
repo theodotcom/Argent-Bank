@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 
+import '../css/main.css'
 import logo from '../img/argentBankLogo.png'
 import iconChat from '../img/icon-chat.png'
 import iconMoney from '../img/icon-money.png'
