@@ -3,6 +3,38 @@ import '../css/main.css'
 import logo from '../img/argentBankLogo.png'
 
 const Signin = () => {
+
+    const profile = (token) => {
+        fetch('http://localhost:3001/api/v1/user/profile', {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(res => res.json())
+            .then(d => {
+                console.log(d)
+            })
+    }
+
+    const signin = (e) => {
+        e.preventDefault()
+        fetch('http://localhost:3001/api/v1/user/login', {
+            method:'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: 'tony@stark.com',
+                password: 'password123'
+            })
+        }).then(res => res.json())
+            .then(data => {
+                profile(data.body.token)
+            })
+    }
+
+
     return (
         <div className="body_container">
             <nav className="main-nav">
@@ -25,7 +57,7 @@ const Signin = () => {
                 <section className="sign-in-content">
                     <i className="fa fa-user-circle sign-in-icon"></i>
                     <h1>Sign In</h1>
-                    <form>
+                    <form onSubmit={e => signin(e)}>
                         <div className="input-wrapper">
                             <label for="username">Username</label>
                             <input type="text" id="username" />
