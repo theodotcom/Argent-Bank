@@ -12,21 +12,20 @@ const getProfileInfos = (token) => {
         })
 }
 
-const signin = (e) => {
-    e.preventDefault()
+const signin = (email, password) => {
     fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: 'tony@stark.com',
-            password: 'password123',
+            email: email,
+            password: password,
         }),
     })
         .then((res) => res.json())
         .then((data) => {
-            getProfileInfos(data.body.token)
+            console.log(data)
         })
 }
 
@@ -69,4 +68,4 @@ const modifyProfile = (token, udpdatedFirstName, udpdatedLastName) => {
         .then((data) => console.log(data))
         .catch((error) => console.log(error))
 }
-export { getProfileInfos, modifyProfile }
+export { getProfileInfos, modifyProfile, signin }

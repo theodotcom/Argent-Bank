@@ -10,6 +10,7 @@ const Profil = () => {
     const [edit, setEdit] = useState(false)
     const firstName = user.firstName
     const lastName = user.lastName
+    const token = user.token
 
     useEffect(() => {
         dispatch(getProfileInfos())
@@ -27,7 +28,7 @@ const Profil = () => {
         e.preventDefault()
         const editFirstName = document.querySelector('#editFirstName').value
         const editLastName = document.querySelector('#editLastName').value
-        dispatch(modifyProfile(editFirstName, editLastName))
+        dispatch(modifyProfile(token, editFirstName, editLastName))
         setEdit(false)
     }
 
