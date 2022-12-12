@@ -26,6 +26,7 @@ const signin = (email, password) => {
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
+            getProfileInfos(data.body.token)
         })
 }
 

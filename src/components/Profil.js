@@ -5,16 +5,16 @@ import { modifyProfile } from '../api/api'
 
 const Profil = () => {
     const store = useSelector((state) => state)
-    const user = store.user
+
     const dispatch = useDispatch()
     const [edit, setEdit] = useState(false)
-    const firstName = user.firstName
-    const lastName = user.lastName
-    const token = user.token
+    const firstName = store.firstName
+    const lastName = store.lastName
+    const token = store.token
 
     useEffect(() => {
-        dispatch(getProfileInfos())
-    }, [dispatch])
+        dispatch(getProfileInfos(token))
+    })
 
     const editOn = () => {
         setEdit(true)
