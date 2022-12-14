@@ -3,14 +3,21 @@ import '../css/main.css'
 import React, { useEffect, useState } from 'react'
 
 import { signin } from '../api/api'
+import {useDispatch, useSelector} from "react-redux";
+import store from '../redux/store'
+
+import {usersReducer} from '../redux/reducer/reducer'
 
 const Signinbis = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const {token} = usersReducer.actions
+    const state = useSelector((state) => state)
 
-    const checkDetails = (e) => {
+    const checkDetails = async (e) => {
         e.preventDefault()
-        signin(email, password)
+        const data = await signin(email, password)
+        store.dispatch(token({token: data}))
     }
 
     // useEffect(() => {
@@ -49,6 +56,8 @@ const Signinbis = () => {
                         </div>
 
                         <button className="sign-in-button">Sign In</button>
+
+                        {state.token}
                     </form>
                 </section>
             </main>

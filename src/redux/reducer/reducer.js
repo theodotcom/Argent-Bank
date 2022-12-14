@@ -1,4 +1,5 @@
 import { initialState } from '../store'
+import {createSlice} from '@reduxjs/toolkit'
 
 // le reducer est une fonction
 function reducer(state, action) {
@@ -14,9 +15,30 @@ function reducer(state, action) {
     return state
 }
 
-export function usersReducer(state = initialState, action) {
+export const usersReducer = createSlice({
+    name: 'users',
+    initialState: {
+        token: ''
+    },
+    reducers: {
+        token: (state, payload) => {
+            state.token = payload.payload.token
+        },
+        profile: (state, payload) => {
+            state.firstName = payload.payload.firstName
+}
+    }
+})
+
+/*export function usersReducer(state = initialState, action) {
     const { payload } = action
     switch (action.type) {
+        case 'userToken':
+            console.log('set user token')
+            return {
+                ...state,
+                token: action.token
+            }
         case 'userSignin':
             return {
                 ...state,
@@ -45,4 +67,4 @@ export function usersReducer(state = initialState, action) {
         default:
             return state
     }
-}
+}*/

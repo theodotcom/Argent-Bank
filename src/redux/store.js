@@ -1,4 +1,5 @@
-import { createStore } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
+import {usersReducer} from './reducer/reducer'
 
 const initialState = {
     firstName: '',
@@ -10,7 +11,9 @@ const initialState = {
     currentState: '',
 }
 
-const store = createStore(reducer, initialState)
+const store = configureStore({
+    reducer: usersReducer.reducer
+})
 
 // subscribe permet de suivre les changements de state
 store.subscribe(() => {
@@ -18,4 +21,4 @@ store.subscribe(() => {
     const state = store.getState()
 })
 
-export { initialState }
+export default store

@@ -1,5 +1,5 @@
 const signin = (email, password) => {
-    fetch('http://localhost:3001/api/v1/user/login', {
+    return fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -11,8 +11,8 @@ const signin = (email, password) => {
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data)
-            getProfileInfos(data.body.token)
+            return data.body.token
+            //return getProfileInfos(data.body.token)
         })
 }
 

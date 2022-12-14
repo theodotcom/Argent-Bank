@@ -1,8 +1,8 @@
 const playPause = () => ({ type: 'playPause' })
 
-const signing = (email, password) => ({
-    type: 'userSignin',
-    payload: { email: email, password: password },
+const getUserToken = (token) => ({
+    type: 'userToken',
+    token,
 })
 
 const getUserDatas = (firstName, lastName, token) => ({
