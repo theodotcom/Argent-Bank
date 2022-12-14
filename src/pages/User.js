@@ -17,7 +17,7 @@ const User = () => {
                 <div>
                     <Link className="main-nav-item" to="/user">
                         <i className="fa fa-user-circle"></i>
-                        Tony
+                        Tony Montana
                     </Link>
                     <Link className="main-nav-item" to="/index">
                         <i className="fa fa-sign-out"></i>
