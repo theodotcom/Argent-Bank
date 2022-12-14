@@ -1,17 +1,3 @@
-const getProfileInfos = (token) => {
-    fetch('http://localhost:3001/api/v1/user/profile', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
-    })
-        .then((res) => res.json())
-        .then((d) => {
-            console.log(d)
-        })
-}
-
 const signin = (email, password) => {
     fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',
@@ -27,6 +13,20 @@ const signin = (email, password) => {
         .then((data) => {
             console.log(data)
             getProfileInfos(data.body.token)
+        })
+}
+
+const getProfileInfos = (token) => {
+    fetch('http://localhost:3001/api/v1/user/profile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .then((d) => {
+            console.log(d)
         })
 }
 

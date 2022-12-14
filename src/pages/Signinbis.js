@@ -13,6 +13,12 @@ const Signinbis = () => {
         signin(email, password)
     }
 
+    // useEffect(() => {
+    //     if (store.currentState === 'logged') {
+    //         navigate('/user')
+    //     }
+    // })
+
     return (
         <div>
             <title>Argent Bank - Sign In</title>

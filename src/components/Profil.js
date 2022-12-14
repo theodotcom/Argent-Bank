@@ -19,7 +19,6 @@ const Profil = () => {
     const editOn = () => {
         setEdit(true)
     }
-    // CLOSE MODALE
     const editOff = () => {
         setEdit(false)
     }
