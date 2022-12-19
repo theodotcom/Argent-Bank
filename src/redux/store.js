@@ -1,21 +1,8 @@
-import { createStore } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
+import { usersReducer } from './reducer/reducer'
 
-const initialState = {
-    firstName: '',
-    lastName: '',
-    token: '',
-    email: '',
-    password: '',
-    loggedIn: false,
-    currentState: '',
-}
-
-const store = createStore(reducer, initialState)
-
-// subscribe permet de suivre les changements de state
-store.subscribe(() => {
-    // on utilise getState pour récupérer le state
-    const state = store.getState()
+const store = configureStore({
+    reducer: usersReducer.reducer,
 })
 
-export { initialState }
+export default store

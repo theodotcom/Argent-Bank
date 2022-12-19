@@ -1,23 +1,37 @@
 import '../css/main.css'
 
 import React, { useEffect, useState } from 'react'
-
+import { redirect, useNavigate } from 'react-router-dom'
 import { signin } from '../api/api'
+import { getProfileInfos } from '../api/api'
+import { useDispatch, useSelector } from 'react-redux'
+import store from '../redux/store'
+
+import { usersReducer } from '../redux/reducer/reducer'
 
 const Signinbis = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+    const { token } = usersReducer.actions
+    const { profile } = usersReducer.actions
+    const state = useSelector((state) => state)
 
-    const checkDetails = (e) => {
+    const checkDetails = async (e) => {
         e.preventDefault()
-        signin(email, password)
-    }
 
-    // useEffect(() => {
-    //     if (store.currentState === 'logged') {
-    //         navigate('/user')
-    //     }
-    // })
+        const data = await signin(email, password)
+
+        store.dispatch(token({ token: data }))
+        const dataUser = await getProfileInfos(data)
+
+        store.dispatch(
+            profile({
+                firstName: dataUser.firstName,
+                lastName: dataUser.lastName,
+            })
+        )
+    }
 
     return (
         <div>
@@ -49,6 +63,8 @@ const Signinbis = () => {
                         </div>
 
                         <button className="sign-in-button">Sign In</button>
+
+                        {console.log(state)}
                     </form>
                 </section>
             </main>

@@ -4,6 +4,7 @@ import Index from './pages/Index'
 import Signin from './pages/Signin'
 import User from './pages/User'
 import Signinbis from './pages/Signinbis'
+import Profil from './components/Profil'
 import Profilbis from './pages/Userbis'
 // import Login from './components/Login'
 
@@ -21,11 +22,7 @@ function App() {
                     ></Route>
 
                     {/* <Route exact path="/login" element={<Login />}></Route> */}
-                    <Route
-                        exact
-                        path="/userbis"
-                        element={<Profilbis />}
-                    ></Route>
+                    <Route exact path="/userbis" element={<Profil />}></Route>
                     <Route exact path="/user" element={<User />}></Route>
                 </Routes>
             </Router>
