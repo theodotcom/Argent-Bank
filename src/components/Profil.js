@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProfileInfos } from '../api/api'
 import { modifyProfile } from '../api/api'
 
-import store from '../redux/store'
-
 import { usersReducer } from '../redux/reducer/reducer'
 
 const Profil = () => {
@@ -21,11 +19,6 @@ const Profil = () => {
     //     const data = await getProfileInfos(firstName, lastName)
     //     store.dispatch(profile({ data }))
     // }
-
-    useEffect(() => {
-        const data = getProfileInfos(firstName, lastName)
-        store.dispatch(profile({ data }))
-    })
 
     const editOn = () => {
         setEdit(true)

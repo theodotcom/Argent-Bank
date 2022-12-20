@@ -19,6 +19,11 @@ export const usersReducer = createSlice({
         profile: (state, payload) => {
             state.firstName = payload.payload.firstName
             state.lastName = payload.payload.lastName
+            state.email = payload.payload.email
         },
     },
 })
+
+export const { token, profile } = usersReducer.actions
+
+export default usersReducer.reducer

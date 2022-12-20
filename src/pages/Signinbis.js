@@ -5,30 +5,31 @@ import { redirect, useNavigate } from 'react-router-dom'
 import { signin } from '../api/api'
 import { getProfileInfos } from '../api/api'
 import { useDispatch, useSelector } from 'react-redux'
-import store from '../redux/store'
+// import store from '../redux/store'
+import { useStore } from 'react-redux'
+import { token, profile } from '../redux/reducer/reducer'
 
 import { usersReducer } from '../redux/reducer/reducer'
 
 const Signinbis = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { token } = usersReducer.actions
-    const { profile } = usersReducer.actions
+    // const store = useStore()
     const state = useSelector((state) => state)
 
     const checkDetails = async (e) => {
         e.preventDefault()
 
         const data = await signin(email, password)
-
-        store.dispatch(token({ token: data }))
+        dispatch(token({ token: data }))
         const dataUser = await getProfileInfos(data)
-
-        store.dispatch(
+        dispatch(
             profile({
                 firstName: dataUser.firstName,
                 lastName: dataUser.lastName,
+                email: dataUser.email,
             })
         )
     }
@@ -63,7 +64,6 @@ const Signinbis = () => {
                         </div>
 
                         <button className="sign-in-button">Sign In</button>
-
                         {console.log(state)}
                     </form>
                 </section>
