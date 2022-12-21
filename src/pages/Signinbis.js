@@ -1,7 +1,7 @@
 import '../css/main.css'
 
 import React, { useEffect, useState } from 'react'
-import { redirect, useNavigate } from 'react-router-dom'
+import { redirect, Navigate } from 'react-router-dom'
 import { signin } from '../api/api'
 import { getProfileInfos } from '../api/api'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,7 +15,6 @@ const Signinbis = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const store = useStore()
     const state = useSelector((state) => state)
 
@@ -32,6 +31,10 @@ const Signinbis = () => {
                 email: dataUser.email,
             })
         )
+    }
+
+    if (state.loggedIn) {
+        return <Navigate to={'/user'} />
     }
 
     return (
@@ -64,7 +67,6 @@ const Signinbis = () => {
                         </div>
 
                         <button className="sign-in-button">Sign In</button>
-                        {console.log(state)}
                     </form>
                 </section>
             </main>
