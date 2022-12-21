@@ -16,16 +16,16 @@ const Signinbis = () => {
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // const store = useStore()
+    const store = useStore()
     const state = useSelector((state) => state)
 
     const checkDetails = async (e) => {
         e.preventDefault()
 
         const data = await signin(email, password)
-        dispatch(token({ token: data }))
+        store.dispatch(token({ token: data }))
         const dataUser = await getProfileInfos(data)
-        dispatch(
+        store.dispatch(
             profile({
                 firstName: dataUser.firstName,
                 lastName: dataUser.lastName,
