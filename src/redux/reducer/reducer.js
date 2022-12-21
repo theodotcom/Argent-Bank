@@ -21,6 +21,11 @@ export const usersReducer = createSlice({
             state.lastName = payload.payload.lastName
             state.email = payload.payload.email
         },
+        modify: (state, action) => {
+            state.firstName = action.payload
+            state.lastName = action.payload
+            // store.dispatch(users.actions.modify('e.target.value'))
+        },
     },
 })
 

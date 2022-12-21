@@ -1,24 +1,26 @@
 import thunk from 'redux-thunk'
+import { useDispatch, useSelector } from 'react-redux'
 
+// const dispatch = useDispatch()
 // const signin = (email, password) => {
 //     return (dispatch) => {
-//         return fetch('http://localhost:3001/api/v1/user/login', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 email: email,
-//                 password: password,
-//             }),
-//         })
-//             .then((res) => res.json())
-//             .then((data) => {
-//                 // Dispatch an action to update the state with the token
-//           dispatch(token({ token: data.body.payload }))
-//             })
-//     }
-// }
+//          return fetch('http://localhost:3001/api/v1/user/login', {
+//              method: 'POST',
+//              headers: {
+//                  'Content-Type': 'application/json',
+//              },
+//              body: JSON.stringify({
+//                  email: email,
+//                  password: password,
+//              }),
+//          })
+//              .then((res) => res.json())
+//              .then((data) => {
+//                  // Dispatch an action to update the state with the token
+//            dispatch(token({ token: data.body.payload }))
+//              })
+//      }
+//  }
 
 // const getProfileInfos = (token) => {
 //     return (dispatch) => {
