@@ -1,30 +1,38 @@
 import '../css/main.css'
 
 import React, { useEffect, useState } from 'react'
-
+import { redirect, useNavigate } from 'react-router-dom'
 import { signin } from '../api/api'
-import {useDispatch, useSelector} from "react-redux";
-import store from '../redux/store'
+import { getProfileInfos } from '../api/api'
+import { useDispatch, useSelector } from 'react-redux'
+// import store from '../redux/store'
+import { useStore } from 'react-redux'
+import { token, profile } from '../redux/reducer/reducer'
 
-import {usersReducer} from '../redux/reducer/reducer'
+import { usersReducer } from '../redux/reducer/reducer'
 
 const Signinbis = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const {token} = usersReducer.actions
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const store = useStore()
     const state = useSelector((state) => state)
 
     const checkDetails = async (e) => {
         e.preventDefault()
-        const data = await signin(email, password)
-        store.dispatch(token({token: data}))
-    }
 
-    // useEffect(() => {
-    //     if (store.currentState === 'logged') {
-    //         navigate('/user')
-    //     }
-    // })
+        const data = await signin(email, password)
+        store.dispatch(token({ token: data }))
+        const dataUser = await getProfileInfos(data)
+        store.dispatch(
+            profile({
+                firstName: dataUser.firstName,
+                lastName: dataUser.lastName,
+                email: dataUser.email,
+            })
+        )
+    }
 
     return (
         <div>
@@ -56,8 +64,7 @@ const Signinbis = () => {
                         </div>
 
                         <button className="sign-in-button">Sign In</button>
-
-                        {state.token}
+                        {console.log(state)}
                     </form>
                 </section>
             </main>

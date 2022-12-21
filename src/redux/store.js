@@ -1,24 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {usersReducer} from './reducer/reducer'
-
-const initialState = {
-    firstName: '',
-    lastName: '',
-    token: '',
-    email: '',
-    password: '',
-    loggedIn: false,
-    currentState: '',
-}
+import thunk from 'redux-thunk'
+import { usersReducer } from './reducer/reducer'
 
 const store = configureStore({
-    reducer: usersReducer.reducer
+    reducer: usersReducer.reducer,
+    middleware: [thunk],
 })
 
-// subscribe permet de suivre les changements de state
-store.subscribe(() => {
-    // on utilise getState pour récupérer le state
-    const state = store.getState()
-})
+console.log(store.getState())
 
 export default store

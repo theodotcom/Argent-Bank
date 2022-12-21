@@ -3,18 +3,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProfileInfos } from '../api/api'
 import { modifyProfile } from '../api/api'
 
+import { usersReducer } from '../redux/reducer/reducer'
+
 const Profil = () => {
-    const store = useSelector((state) => state)
-
+    const { profile } = usersReducer.actions
+    const state = useSelector((state) => state)
     const dispatch = useDispatch()
+    const firstName = state.firstName
+    const lastName = state.lastName
+    const token = state.token
     const [edit, setEdit] = useState(false)
-    const firstName = store.firstName
-    const lastName = store.lastName
-    const token = store.token
 
-    useEffect(() => {
-        dispatch(getProfileInfos(token))
-    })
+    // const checkDetails = async (e) => {
+    //     e.preventDefault()
+    //     const data = await getProfileInfos(firstName, lastName)
+    //     store.dispatch(profile({ data }))
+    // }
 
     const editOn = () => {
         setEdit(true)

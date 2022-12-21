@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom'
 import '../css/main.css'
 import logo from '../img/argentBankLogo.png'
+import { useSelector } from 'react-redux'
 
 const User = () => {
+    const state = useSelector((state) => state)
+    console.log(state)
+    const firstName = state.firstName
+    const lastName = state.lastName
     return (
         <div className="body_container">
             <nav className="main-nav">
@@ -17,7 +22,8 @@ const User = () => {
                 <div>
                     <Link className="main-nav-item" to="/user">
                         <i className="fa fa-user-circle"></i>
-                        Tony Montana
+                        {firstName}
+                        {lastName}
                     </Link>
                     <Link className="main-nav-item" to="/index">
                         <i className="fa fa-sign-out"></i>
@@ -28,9 +34,9 @@ const User = () => {
             <main className="main bg-dark">
                 <div className="header">
                     <h1>
-                        Welcome back
+                        {firstName}
                         <br />
-                        Tony Jarvis!
+                        {lastName}
                     </h1>
                     <button className="edit-button">Edit Name</button>
                 </div>
