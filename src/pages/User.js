@@ -2,12 +2,19 @@ import { Link } from 'react-router-dom'
 import '../css/main.css'
 import logo from '../img/argentBankLogo.png'
 import { useSelector } from 'react-redux'
+import {Navigate} from 'react-router-dom';
 
 const User = () => {
     const state = useSelector((state) => state)
     console.log(state)
     const firstName = state.firstName
     const lastName = state.lastName
+
+    if(!state.loggedIn){
+        return <Navigate to={'/signinb'} />
+    }
+
+
     return (
         <div className="body_container">
             <nav className="main-nav">
