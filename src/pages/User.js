@@ -3,21 +3,31 @@ import '../css/main.css'
 import logo from '../img/argentBankLogo.png'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
+import { useState, dispatch } from 'react'
+import { modifyProfile } from '../api/api'
 
 const User = () => {
     const state = useSelector((state) => state)
-    console.log(state)
     const firstName = state.firstName
     const lastName = state.lastName
+    const token = state.token
+    const [editingName, setEditingName] = useState(false)
+    const editProfile = (e) => {
+        e.preventDefault()
+        const editFirstName = document.querySelector('#editFirstName').value
+        const editLastName = document.querySelector('#editLastName').value
+        dispatch(modifyProfile(token, editFirstName, editLastName))
+        setEditingName(false)
+    }
 
     if (!state.loggedIn) {
-        return <Navigate to={'/signinb'} />
+        return <Navigate to={'/signin'} />
     }
 
     return (
         <div className="body_container">
             <nav className="main-nav">
-                <Link className="main-nav-logo" to="/index">
+                <Link className="main-nav-logo" to="/">
                     <img
                         className="main-nav-logo-image"
                         src={logo}
@@ -28,7 +38,7 @@ const User = () => {
                 <div>
                     <Link className="main-nav-item" to="/user">
                         <i className="fa fa-user-circle"></i>
-                        {firstName}
+                        {firstName}&nbsp;
                         {lastName}
                     </Link>
                     <Link className="main-nav-item" to="/index">
@@ -39,12 +49,38 @@ const User = () => {
             </nav>
             <main className="main bg-dark">
                 <div className="header">
-                    <h1>
-                        {firstName}
-                        <br />
-                        {lastName}
-                    </h1>
-                    <button className="edit-button">Edit Name</button>
+                    {editingName ? (
+                        <form>
+                            <label htmlFor="firstName" id="editLastName">
+                                First Name:
+                            </label>
+                            <input type="text" id="firstName" />
+                            <label htmlFor="lastName" id="editLastName">
+                                Last Name:
+                            </label>
+                            <input type="text" id="lastName" />
+                            <button type="submit" onClick={() => editProfile}>
+                                Save
+                            </button>
+                            <button onClick={() => setEditingName(false)}>
+                                Cancel
+                            </button>
+                        </form>
+                    ) : (
+                        <>
+                            <h1>
+                                {firstName}
+                                <br />
+                                {lastName}
+                            </h1>
+                            <button
+                                className="edit-button"
+                                onClick={() => setEditingName(true)}
+                            >
+                                Edit Name
+                            </button>
+                        </>
+                    )}
                 </div>
                 <h2 className="sr-only">Accounts</h2>
                 <section className="account">

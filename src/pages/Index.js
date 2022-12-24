@@ -10,7 +10,7 @@ const Index = () => {
     return (
         <div className="body_container">
             <nav className="main-nav">
-                <Link className="main-nav-logo" to="/index">
+                <Link className="main-nav-logo" to="/">
                     <img
                         className="main-nav-logo-image"
                         src={logo}
