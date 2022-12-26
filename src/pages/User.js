@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import { useState, dispatch } from 'react'
 import { modifyProfile } from '../api/api'
+import { modify } from '../redux/reducer/reducer'
 
 const User = () => {
     const state = useSelector((state) => state)
@@ -16,7 +17,14 @@ const User = () => {
         e.preventDefault()
         const editFirstName = document.querySelector('#editFirstName').value
         const editLastName = document.querySelector('#editLastName').value
-        dispatch(modifyProfile(token, editFirstName, editLastName))
+        modifyProfile(token, editFirstName, editLastName)
+        dispatch(
+            modify({
+                firstName: editFirstName,
+                lastName: editLastName,
+            })
+        )
+
         setEditingName(false)
     }
 
@@ -41,7 +49,7 @@ const User = () => {
                         {firstName}&nbsp;
                         {lastName}
                     </Link>
-                    <Link className="main-nav-item" to="/index">
+                    <Link className="main-nav-item" to="/">
                         <i className="fa fa-sign-out"></i>
                         Sign Out
                     </Link>

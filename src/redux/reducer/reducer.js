@@ -21,14 +21,14 @@ export const usersReducer = createSlice({
             state.lastName = payload.payload.lastName
             state.email = payload.payload.email
         },
-        modify: (state, action) => {
-            state.firstName = action.payload
-            state.lastName = action.payload
-            // store.dispatch(users.actions.modify('e.target.value'))
+        modify: (state, payload) => {
+            state.firstName = payload.payload.firstName
+            state.lastName = payload.payload.firstName
+            state.loggedIn = true
         },
     },
 })
 
-export const { token, profile } = usersReducer.actions
+export const { token, profile, modify } = usersReducer.actions
 
 export default usersReducer.reducer
