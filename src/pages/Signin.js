@@ -78,7 +78,7 @@ const Signin = () => {
                         </div>
                         <div className="input-remember">
                             <input type="checkbox" id="remember-me" />
-                            <label for="remember-me">Remember me</label>
+                            <label htmlFor="remember-me">Remember me</label>
                         </div>
 
                         <button className="sign-in-button">Sign In</button>

@@ -23,7 +23,7 @@ export const usersReducer = createSlice({
         },
         modify: (state, payload) => {
             state.firstName = payload.payload.firstName
-            state.lastName = payload.payload.firstName
+            state.lastName = payload.payload.lastName
             state.loggedIn = true
         },
     },

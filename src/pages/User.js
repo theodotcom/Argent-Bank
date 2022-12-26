@@ -1,30 +1,38 @@
 import { Link } from 'react-router-dom'
 import '../css/main.css'
 import logo from '../img/argentBankLogo.png'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-import { useState, dispatch } from 'react'
+import { useEffect, useState } from 'react'
 import { modifyProfile } from '../api/api'
 import { modify } from '../redux/reducer/reducer'
 
 const User = () => {
     const state = useSelector((state) => state)
-    const firstName = state.firstName
-    const lastName = state.lastName
-    const token = state.token
+    const dispatch = useDispatch()
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [editingName, setEditingName] = useState(false)
-    const editProfile = (e) => {
-        e.preventDefault()
-        const editFirstName = document.querySelector('#editFirstName').value
-        const editLastName = document.querySelector('#editLastName').value
-        modifyProfile(token, editFirstName, editLastName)
-        dispatch(
-            modify({
-                firstName: editFirstName,
-                lastName: editLastName,
-            })
-        )
+    const token = state.token
 
+    useEffect(() => {
+        setFirstName(state.firstName)
+        setLastName(state.lastName)
+    }, [state.firstName, state.lastName])
+
+    const editProfile = async (e) => {
+        e.preventDefault()
+        try {
+            await modifyProfile(token, firstName, lastName)
+            dispatch(
+                modify({
+                    firstName,
+                    lastName,
+                })
+            )
+        } catch (e) {
+            console.error(e)
+        }
         setEditingName(false)
     }
 
@@ -46,8 +54,8 @@ const User = () => {
                 <div>
                     <Link className="main-nav-item" to="/user">
                         <i className="fa fa-user-circle"></i>
-                        {firstName}&nbsp;
-                        {lastName}
+                        {state.firstName}&nbsp;
+                        {state.lastName}
                     </Link>
                     <Link className="main-nav-item" to="/">
                         <i className="fa fa-sign-out"></i>
@@ -58,18 +66,26 @@ const User = () => {
             <main className="main bg-dark">
                 <div className="header">
                     {editingName ? (
-                        <form>
+                        <form onSubmit={editProfile}>
                             <label htmlFor="firstName" id="editLastName">
                                 First Name:
                             </label>
-                            <input type="text" id="firstName" />
+                            <input
+                                type="text"
+                                id="firstName"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                            />
                             <label htmlFor="lastName" id="editLastName">
                                 Last Name:
                             </label>
-                            <input type="text" id="lastName" />
-                            <button type="submit" onClick={() => editProfile}>
-                                Save
-                            </button>
+                            <input
+                                type="text"
+                                id="lastName"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                            />
+                            <button type="submit">Save</button>
                             <button onClick={() => setEditingName(false)}>
                                 Cancel
                             </button>
@@ -77,9 +93,9 @@ const User = () => {
                     ) : (
                         <>
                             <h1>
-                                {firstName}
+                                {state.firstName}
                                 <br />
-                                {lastName}
+                                {state.lastName}
                             </h1>
                             <button
                                 className="edit-button"
