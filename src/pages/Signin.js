@@ -1,45 +1,43 @@
-import { Link } from 'react-router-dom'
 import '../css/main.css'
+import React, { useState } from 'react'
+import { Navigate, Link } from 'react-router-dom'
+import { signin } from '../api/api'
+import { getProfileInfos } from '../api/api'
+import { useSelector } from 'react-redux'
+import { useStore } from 'react-redux'
+import { token, profile } from '../redux/reducer/reducer'
 import logo from '../img/argentBankLogo.png'
 
 const Signin = () => {
-    const profile = (token) => {
-        fetch('http://localhost:3001/api/v1/user/profile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-        })
-            .then((res) => res.json())
-            .then((d) => {
-                console.log(d)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const store = useStore()
+    const state = useSelector((state) => state)
+
+    const checkDetails = async (e) => {
+        e.preventDefault()
+
+        const data = await signin(email, password)
+        store.dispatch(token({ token: data }))
+        const dataUser = await getProfileInfos(data)
+        store.dispatch(
+            profile({
+                firstName: dataUser.firstName,
+                lastName: dataUser.lastName,
+                email: dataUser.email,
             })
+        )
     }
 
-    const signin = (e) => {
-        e.preventDefault()
-        fetch('http://localhost:3001/api/v1/user/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: 'steve@rogers.com',
-                password: 'password456',
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data)
-                profile(data.body.token)
-            })
+    if (state.loggedIn) {
+        return <Navigate to={'/user'} />
     }
 
     return (
-        <div className="body_container">
+        <div>
+            <title>Argent Bank - Sign In</title>
             <nav className="main-nav">
-                <Link className="main-nav-logo" to="/index">
+                <Link className="main-nav-logo" to="/">
                     <img
                         className="main-nav-logo-image"
                         src={logo}
@@ -58,23 +56,30 @@ const Signin = () => {
                 <section className="sign-in-content">
                     <i className="fa fa-user-circle sign-in-icon"></i>
                     <h1>Sign In</h1>
-                    <form onSubmit={(e) => signin(e)}>
+
+                    <form onSubmit={(e) => checkDetails(e)}>
                         <div className="input-wrapper">
-                            <label for="username">Username</label>
-                            <input type="text" id="username" />
+                            <label htmlFor="username">Username</label>
+                            <input
+                                type="text"
+                                id="username"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
                         <div className="input-wrapper">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" />
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                         </div>
                         <div className="input-remember">
                             <input type="checkbox" id="remember-me" />
                             <label for="remember-me">Remember me</label>
                         </div>
-
-                        <Link href="/user" className="sign-in-button">
-                            Sign In
-                        </Link>
 
                         <button className="sign-in-button">Sign In</button>
                     </form>
